@@ -122,6 +122,7 @@ export const flexShapeProps: RecordProps<TLFlexShape> = {
 	itemProps: T.dict(T.string, flexShapeItemPropsValidator),
 }
 
+/** @internal */
 const Versions = createShapePropsMigrationIds('flex', {})
 
 /** @public */

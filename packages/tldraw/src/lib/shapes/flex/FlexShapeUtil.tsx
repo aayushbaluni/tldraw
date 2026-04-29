@@ -1,5 +1,6 @@
 import {
 	BaseFrameLikeShapeUtil,
+	Group2d,
 	HTMLContainer,
 	Rectangle2d,
 	TLFlexShape,
@@ -53,10 +54,14 @@ export class FlexShapeUtil extends BaseFrameLikeShapeUtil<TLFlexShape> {
 	}
 
 	override getGeometry(shape: TLFlexShape) {
-		return new Rectangle2d({
-			width: shape.props.w,
-			height: shape.props.h,
-			isFilled: false,
+		return new Group2d({
+			children: [
+				new Rectangle2d({
+					width: shape.props.w,
+					height: shape.props.h,
+					isFilled: false,
+				}),
+			],
 		})
 	}
 
@@ -98,17 +103,19 @@ export class FlexShapeUtil extends BaseFrameLikeShapeUtil<TLFlexShape> {
 		return resizeBox(shape, info)
 	}
 
-	override onChildrenChange(shape: TLFlexShape): TLShapePartial | void {
+	override onChildrenChange(shape: TLFlexShape): TLShapePartial[] | void {
 		const childIds = new Set(this.editor.getSortedChildIdsForParent(shape.id))
 		const nextItemProps = Object.fromEntries(
 			Object.entries(shape.props.itemProps).filter(([id]) => childIds.has(id as any))
 		)
 		if (Object.keys(nextItemProps).length === Object.keys(shape.props.itemProps).length) return
-		return {
-			id: shape.id,
-			type: shape.type,
-			props: { itemProps: nextItemProps },
-		}
+		return [
+			{
+				id: shape.id,
+				type: shape.type,
+				props: { itemProps: nextItemProps },
+			},
+		]
 	}
 }
 
@@ -121,7 +128,7 @@ function FlexShapeComponent({ shape }: { shape: TLFlexShape }) {
 			editor
 				.getSortedChildIdsForParent(shape.id)
 				.map((id) => editor.getShape(id))
-				.filter(Boolean),
+				.filter((child) => child !== undefined),
 		[editor, shape.id]
 	)
 	const childLayoutKey = children.map((child) => `${child.id}:${child.x}:${child.y}`).join('|')
@@ -192,11 +199,7 @@ function FlexShapeComponent({ shape }: { shape: TLFlexShape }) {
 						/>
 					)
 				})}
-				{children.length === 0 ? (
-					<div className="tl-flex__empty">Flex</div>
-				) : (
-					<div className="tl-flex__defaults" style={getFlexItemStyle(FLEX_ITEM_DEFAULTS)} />
-				)}
+				{children.length === 0 ? <div className="tl-flex__empty">Flex</div> : null}
 			</div>
 		</HTMLContainer>
 	)

@@ -8,7 +8,7 @@ import classNames from 'classnames'
 import { ReactNode, memo, useEffect, useRef } from 'react'
 import { useRelevantStyles } from '../../hooks/useRelevantStyles'
 import { DefaultStylePanelContent } from './DefaultStylePanelContent'
-import { InheritedStylePanelContent, getFlexParent } from './InheritedStylePanelContent'
+import { InheritedStylePanelContent } from './InheritedStylePanelContent'
 import { StylePanelContextProvider } from './StylePanelContext'
 
 /** @public */

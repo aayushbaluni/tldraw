@@ -168,7 +168,7 @@ function StylePanelButtonPickerInlineInner<T extends string>(
 							data-isactive={isActive}
 							title={label}
 							style={
-								style === (DefaultColorStyle as StyleProp<unknown>)
+								style.id === DefaultColorStyle.id
 									? { color: getColorValue(colors, item.value as TLDefaultColorStyle, 'solid') }
 									: undefined
 							}

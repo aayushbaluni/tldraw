@@ -227,7 +227,7 @@ export function StylePanelSizePicker() {
 			items={STYLES.size}
 			value={size}
 			onValueChange={(style, value) => {
-				onValueChange(style, value)
+				onValueChange(style as typeof DefaultSizeStyle, value)
 				const selectedShapeIds = editor.getSelectedShapeIds()
 				if (selectedShapeIds.length > 0) {
 					kickoutOccludedShapes(editor, selectedShapeIds)
@@ -472,7 +472,7 @@ export function StylePanelFlexGapPicker() {
 			uiType="flex-space"
 			stylePanelType="flex-gap"
 			style={FlexShapeGapStyle}
-			items={STYLES.flexSpace}
+			items={STYLES.flexGap}
 			value={gap}
 		/>
 	)
@@ -491,7 +491,7 @@ export function StylePanelFlexPaddingPicker() {
 			uiType="flex-space"
 			stylePanelType="flex-padding"
 			style={FlexShapePaddingStyle}
-			items={STYLES.flexSpace}
+			items={STYLES.flexPadding}
 			value={padding}
 		/>
 	)

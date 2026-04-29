@@ -1,4 +1,11 @@
-import { SharedStyle, TLFlexShape, TLFlexShapeItemProps, useEditor, useValue } from '@tldraw/editor'
+import {
+	SharedStyle,
+	StyleProp,
+	TLFlexShape,
+	TLFlexShapeItemProps,
+	useEditor,
+	useValue,
+} from '@tldraw/editor'
 import { useMemo } from 'react'
 import { FLEX_ITEM_DEFAULTS } from '../../../shapes/flex/flexLayout'
 import { STYLES, StyleValuesForUi } from '../../../styles'
@@ -10,36 +17,26 @@ import { StylePanelSubheading } from './StylePanelSubheading'
 type FlexItemStyleKey = keyof TLFlexShapeItemProps
 
 const flexItemStyleProps = {
-	alignSelf: {
-		id: 'tldraw:flexItemAlignSelf',
+	alignSelf: StyleProp.defineEnum('tldraw:flexItemAlignSelf', {
 		defaultValue: FLEX_ITEM_DEFAULTS.alignSelf,
-		values: STYLES.flexAlignSelf.map((item) => item.value),
-		validate: (value: unknown) => value,
-	},
-	flexGrow: {
-		id: 'tldraw:flexItemGrow',
-		defaultValue: String(FLEX_ITEM_DEFAULTS.flexGrow),
-		values: STYLES.flexGrow.map((item) => item.value),
-		validate: (value: unknown) => value,
-	},
-	flexShrink: {
-		id: 'tldraw:flexItemShrink',
-		defaultValue: String(FLEX_ITEM_DEFAULTS.flexShrink),
-		values: STYLES.flexShrink.map((item) => item.value),
-		validate: (value: unknown) => value,
-	},
-	flexBasis: {
-		id: 'tldraw:flexItemBasis',
+		values: ['auto', 'flex-start', 'center', 'flex-end', 'stretch'],
+	}),
+	flexGrow: StyleProp.defineEnum('tldraw:flexItemGrow', {
+		defaultValue: '0',
+		values: ['0', '1'],
+	}),
+	flexShrink: StyleProp.defineEnum('tldraw:flexItemShrink', {
+		defaultValue: '1',
+		values: ['0', '1'],
+	}),
+	flexBasis: StyleProp.defineEnum('tldraw:flexItemBasis', {
 		defaultValue: FLEX_ITEM_DEFAULTS.flexBasis,
-		values: STYLES.flexBasis.map((item) => item.value),
-		validate: (value: unknown) => value,
-	},
-	order: {
-		id: 'tldraw:flexItemOrder',
-		defaultValue: String(FLEX_ITEM_DEFAULTS.order),
-		values: STYLES.flexOrder.map((item) => item.value),
-		validate: (value: unknown) => value,
-	},
+		values: ['auto', 'zero', 's', 'm', 'l'],
+	}),
+	order: StyleProp.defineEnum('tldraw:flexItemOrder', {
+		defaultValue: '0',
+		values: ['-1', '0', '1'],
+	}),
 } as const
 
 /** @public @react */
@@ -65,14 +62,14 @@ export function InheritedStylePanelContent() {
 			const existing = { ...FLEX_ITEM_DEFAULTS, ...parent.props.itemProps[child.id] }
 			nextItemProps[child.id] = {
 				...existing,
-				[key]: flexItemStyleProps[key].validate(value),
+				[key]: getFlexItemValue(key, value),
 			}
 		}
 		editor.updateShape<TLFlexShape>({
 			id: parent.id,
 			type: parent.type,
 			props: {
-				itemProps: nextItemProps,
+				itemProps: nextItemProps as TLFlexShape['props']['itemProps'],
 			},
 		})
 	}
@@ -122,6 +119,30 @@ export function InheritedStylePanelContent() {
 			/>
 		</StylePanelSection>
 	)
+}
+
+function getCommonFlexParent(
+	editor: ReturnType<typeof useEditor>,
+	shapes: readonly ReturnType<typeof editor.getSelectedShapes>[number][]
+) {
+	let flexParent: TLFlexShape | null = null
+	for (const shape of shapes) {
+		const parent = editor.getShape(shape.parentId)
+		if (!parent || parent.type !== 'flex') return null
+		if (flexParent && flexParent.id !== parent.id) return null
+		flexParent = parent as TLFlexShape
+	}
+	return flexParent
+}
+
+function getFlexItemValue<T extends FlexItemStyleKey>(
+	key: T,
+	value: string
+): TLFlexShapeItemProps[T] {
+	if (key === 'flexGrow' || key === 'flexShrink' || key === 'order') {
+		return Number(value) as TLFlexShapeItemProps[T]
+	}
+	return value as TLFlexShapeItemProps[T]
 }
 
 function FlexItemPicker({

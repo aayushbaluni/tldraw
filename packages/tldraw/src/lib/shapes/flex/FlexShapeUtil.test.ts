@@ -2,6 +2,7 @@ import {
 	FlexShapeAlignItemsStyle,
 	FlexShapeDirectionStyle,
 	FlexShapeJustifyContentStyle,
+	TLFlexShape,
 	createShapeId,
 } from '@tldraw/editor'
 import { TestEditor } from '../../../test/TestEditor'
@@ -83,7 +84,7 @@ describe('FlexShapeUtil', () => {
 			},
 		])
 
-		const flex = editor.getShape(ids.flex)!
+		const flex = editor.getShape<TLFlexShape>(ids.flex)!
 		expect(flex?.type).toBe('flex')
 		const updates = getFlexShapeChildUpdates(editor, flex, [
 			{ id: ids.childA, x: 16, y: 16, w: 60, h: 50 },

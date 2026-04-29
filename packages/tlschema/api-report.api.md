@@ -333,6 +333,10 @@ export const defaultShapeSchemas: {
         migrations: TLPropsMigrations;
         props: RecordProps<TLEmbedShape>;
     };
+    flex: {
+        migrations: TLPropsMigrations;
+        props: RecordProps<TLFlexShape>;
+    };
     frame: {
         migrations: TLPropsMigrations;
         props: RecordProps<TLFrameShape>;
@@ -415,6 +419,39 @@ export class EnumStyleProp<T> extends StyleProp<T> {
 export type ExtractShapeByProps<P> = Extract<TLShape, {
     props: P;
 }>;
+
+// @public (undocumented)
+export const FlexShapeAlignContentStyle: EnumStyleProp<"center" | "flex-end" | "flex-start" | "space-around" | "space-between" | "stretch">;
+
+// @public (undocumented)
+export const FlexShapeAlignItemsStyle: EnumStyleProp<"center" | "flex-end" | "flex-start" | "stretch">;
+
+// @public (undocumented)
+export const FlexShapeDirectionStyle: EnumStyleProp<"column" | "row">;
+
+// @public (undocumented)
+export const FlexShapeGapStyle: EnumStyleProp<"l" | "m" | "none" | "s" | "xl" | "xs">;
+
+// @public (undocumented)
+export const flexShapeItemPropsValidator: T.ObjectValidator<TLFlexShapeItemProps>;
+
+// @public (undocumented)
+export const FlexShapeJustifyContentStyle: EnumStyleProp<"center" | "flex-end" | "flex-start" | "space-around" | "space-between" | "space-evenly">;
+
+// @public (undocumented)
+export const flexShapeMigrations: TLPropsMigrations;
+
+// @public (undocumented)
+export const FlexShapePaddingStyle: EnumStyleProp<"l" | "m" | "none" | "s" | "xl" | "xs">;
+
+// @public (undocumented)
+export const flexShapeProps: RecordProps<TLFlexShape>;
+
+// @internal (undocumented)
+export const flexShapeVersions: {};
+
+// @public (undocumented)
+export const FlexShapeWrapStyle: EnumStyleProp<"nowrap" | "wrap">;
 
 // @public
 export const frameShapeMigrations: TLPropsMigrations;
@@ -1106,7 +1143,7 @@ export type TLDefaultHorizontalAlignStyle = T.TypeOf<typeof DefaultHorizontalAli
 export type TLDefaultRecord = TLAsset | TLBinding | TLCamera | TLDocument | TLInstance | TLInstancePageState | TLInstancePresence | TLPage | TLPointer | TLShape | TLUser;
 
 // @public
-export type TLDefaultShape = TLArrowShape | TLBookmarkShape | TLDrawShape | TLEmbedShape | TLFrameShape | TLGeoShape | TLGroupShape | TLHighlightShape | TLImageShape | TLLineShape | TLNoteShape | TLTextShape | TLVideoShape;
+export type TLDefaultShape = TLArrowShape | TLBookmarkShape | TLDrawShape | TLEmbedShape | TLFlexShape | TLFrameShape | TLGeoShape | TLGroupShape | TLHighlightShape | TLImageShape | TLLineShape | TLNoteShape | TLTextShape | TLVideoShape;
 
 // @public
 export type TLDefaultSizeStyle = T.TypeOf<typeof DefaultSizeStyle>;
@@ -1160,6 +1197,74 @@ export interface TLEmbedShapeProps {
     url: string;
     w: number;
 }
+
+// @public (undocumented)
+export type TLFlexShape = TLBaseShape<'flex', TLFlexShapeProps>;
+
+// @public (undocumented)
+export type TLFlexShapeAlignContent = T.TypeOf<typeof FlexShapeAlignContentStyle>;
+
+// @public (undocumented)
+export type TLFlexShapeAlignItems = T.TypeOf<typeof FlexShapeAlignItemsStyle>;
+
+// @public (undocumented)
+export type TLFlexShapeDirection = T.TypeOf<typeof FlexShapeDirectionStyle>;
+
+// @public (undocumented)
+export type TLFlexShapeGap = T.TypeOf<typeof FlexShapeGapStyle>;
+
+// @public (undocumented)
+export type TLFlexShapeItemAlignSelf = 'auto' | 'center' | 'flex-end' | 'flex-start' | 'stretch';
+
+// @public (undocumented)
+export type TLFlexShapeItemBasis = 'auto' | 'l' | 'm' | 's' | 'zero';
+
+// @public (undocumented)
+export interface TLFlexShapeItemProps {
+    // (undocumented)
+    alignSelf: TLFlexShapeItemAlignSelf;
+    // (undocumented)
+    flexBasis: TLFlexShapeItemBasis;
+    // (undocumented)
+    flexGrow: number;
+    // (undocumented)
+    flexShrink: number;
+    // (undocumented)
+    order: number;
+}
+
+// @public (undocumented)
+export type TLFlexShapeJustifyContent = T.TypeOf<typeof FlexShapeJustifyContentStyle>;
+
+// @public (undocumented)
+export type TLFlexShapePadding = T.TypeOf<typeof FlexShapePaddingStyle>;
+
+// @public (undocumented)
+export interface TLFlexShapeProps {
+    // (undocumented)
+    alignContent: TLFlexShapeAlignContent;
+    // (undocumented)
+    alignItems: TLFlexShapeAlignItems;
+    // (undocumented)
+    direction: TLFlexShapeDirection;
+    // (undocumented)
+    gap: TLFlexShapeGap;
+    // (undocumented)
+    h: number;
+    // (undocumented)
+    itemProps: Record<string, TLFlexShapeItemProps>;
+    // (undocumented)
+    justifyContent: TLFlexShapeJustifyContent;
+    // (undocumented)
+    padding: TLFlexShapePadding;
+    // (undocumented)
+    w: number;
+    // (undocumented)
+    wrap: TLFlexShapeWrap;
+}
+
+// @public (undocumented)
+export type TLFlexShapeWrap = T.TypeOf<typeof FlexShapeWrapStyle>;
 
 // @public
 export interface TLFontFace {
