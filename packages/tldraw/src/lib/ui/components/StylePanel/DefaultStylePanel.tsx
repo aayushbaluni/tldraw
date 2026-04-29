@@ -8,6 +8,7 @@ import classNames from 'classnames'
 import { ReactNode, memo, useEffect, useRef } from 'react'
 import { useRelevantStyles } from '../../hooks/useRelevantStyles'
 import { DefaultStylePanelContent } from './DefaultStylePanelContent'
+import { InheritedStylePanelContent, getFlexParent } from './InheritedStylePanelContent'
 import { StylePanelContextProvider } from './StylePanelContext'
 
 /** @public */
@@ -32,6 +33,7 @@ export const DefaultStylePanel = memo(function DefaultStylePanel({
 	usePassThroughWheelEvents(ref)
 
 	const defaultStyles = useRelevantStyles()
+	const hasInheritedFlexItemStyles = useHasInheritedFlexItemStyles()
 	if (styles === undefined) {
 		styles = defaultStyles
 	}
@@ -78,7 +80,32 @@ export const DefaultStylePanel = memo(function DefaultStylePanel({
 				<StylePanelContextProvider styles={styles}>
 					{children ?? <DefaultStylePanelContent />}
 				</StylePanelContextProvider>
+				{children || !hasInheritedFlexItemStyles ? null : (
+					<StylePanelContextProvider styles={styles}>
+						<InheritedStylePanelContent />
+					</StylePanelContextProvider>
+				)}
 			</div>
 		)
 	)
 })
+
+function useHasInheritedFlexItemStyles() {
+	const editor = useEditor()
+	return useValue(
+		'has inherited flex item styles',
+		() => {
+			const selectedShapes = editor.getSelectedShapes()
+			if (selectedShapes.length === 0) return false
+			let flexParentId: string | null = null
+			for (const shape of selectedShapes) {
+				const parent = editor.getShape(shape.parentId)
+				if (!parent || parent.type !== 'flex') return false
+				if (flexParentId && flexParentId !== parent.id) return false
+				flexParentId = parent.id
+			}
+			return true
+		},
+		[editor]
+	)
+}

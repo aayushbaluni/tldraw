@@ -195,6 +195,8 @@ export {
 	type EmbedShapeOptions,
 	type EmbedShapeUtilDisplayValues,
 } from './lib/shapes/embed/EmbedShapeUtil'
+export { FlexShapeTool } from './lib/shapes/flex/FlexShapeTool'
+export { FlexShapeUtil } from './lib/shapes/flex/FlexShapeUtil'
 export { FrameShapeTool } from './lib/shapes/frame/FrameShapeTool'
 export {
 	FrameShapeUtil,

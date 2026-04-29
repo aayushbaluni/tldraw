@@ -1,5 +1,6 @@
 import { ArrowShapeTool } from './shapes/arrow/ArrowShapeTool'
 import { DrawShapeTool } from './shapes/draw/DrawShapeTool'
+import { FlexShapeTool } from './shapes/flex/FlexShapeTool'
 import { FrameShapeTool } from './shapes/frame/FrameShapeTool'
 import { GeoShapeTool } from './shapes/geo/GeoShapeTool'
 import { HighlightShapeTool } from './shapes/highlight/HighlightShapeTool'
@@ -15,6 +16,7 @@ export const defaultShapeTools = [
 	NoteShapeTool,
 	LineShapeTool,
 	FrameShapeTool,
+	FlexShapeTool,
 	ArrowShapeTool,
 	HighlightShapeTool,
 ] as const

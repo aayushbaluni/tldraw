@@ -40,6 +40,7 @@ import { TLBaseShape } from './shapes/TLBaseShape'
 import { bookmarkShapeMigrations, bookmarkShapeProps } from './shapes/TLBookmarkShape'
 import { drawShapeMigrations, drawShapeProps } from './shapes/TLDrawShape'
 import { embedShapeMigrations, embedShapeProps } from './shapes/TLEmbedShape'
+import { flexShapeMigrations, flexShapeProps } from './shapes/TLFlexShape'
 import { frameShapeMigrations, frameShapeProps } from './shapes/TLFrameShape'
 import { geoShapeMigrations, geoShapeProps } from './shapes/TLGeoShape'
 import { groupShapeMigrations, groupShapeProps } from './shapes/TLGroupShape'
@@ -152,6 +153,7 @@ export const defaultShapeSchemas = {
 	bookmark: { migrations: bookmarkShapeMigrations, props: bookmarkShapeProps },
 	draw: { migrations: drawShapeMigrations, props: drawShapeProps },
 	embed: { migrations: embedShapeMigrations, props: embedShapeProps },
+	flex: { migrations: flexShapeMigrations, props: flexShapeProps },
 	frame: { migrations: frameShapeMigrations, props: frameShapeProps },
 	geo: { migrations: geoShapeMigrations, props: geoShapeProps },
 	group: { migrations: groupShapeMigrations, props: groupShapeProps },

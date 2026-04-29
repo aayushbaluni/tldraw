@@ -1322,6 +1322,47 @@ input,
 	cursor: var(--tl-cursor-text);
 }
 
+/* --------------------- Flex shape -------------------- */
+
+.tl-flex {
+	--tl-flex-gap: 16px;
+	--tl-flex-padding: 16px;
+	color: var(--tl-color-text-1);
+}
+
+.tl-flex__border {
+	position: absolute;
+	inset: 0px;
+	border: calc(1px / var(--tl-zoom)) solid currentColor;
+	border-radius: calc(4px / var(--tl-zoom));
+	background: color-mix(in srgb, currentColor 3%, transparent);
+}
+
+.tl-flex__measure {
+	position: absolute;
+	inset: 0px;
+	visibility: hidden;
+	pointer-events: none;
+}
+
+.tl-flex__measure-item,
+.tl-flex__defaults {
+	box-sizing: border-box;
+}
+
+.tl-flex__empty {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 48px;
+	min-height: 32px;
+	border: calc(1px / var(--tl-zoom)) dashed currentColor;
+	border-radius: calc(4px / var(--tl-zoom));
+	font-family: var(--tl-font-ui);
+	font-size: calc(12px / var(--tl-zoom));
+	color: var(--tl-color-text-3);
+}
+
 /* ------------------- Embed Shape ------------------ */
 
 .tl-embed {

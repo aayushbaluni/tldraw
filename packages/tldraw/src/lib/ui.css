@@ -1121,6 +1121,14 @@ tldraw? probably.
 	display: none;
 }
 
+.tlui-style-panel__inherited-title {
+	padding: 8px 8px 2px;
+	color: var(--tl-color-text-3);
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+
 /*
  * This is used in a couple places, like Align and Vertical Align.
  * It's because we have a toolbar with a Toggle Group but then an adjacent button

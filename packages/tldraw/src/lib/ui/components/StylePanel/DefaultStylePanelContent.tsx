@@ -10,6 +10,13 @@ import {
 	DefaultSizeStyle,
 	DefaultTextAlignStyle,
 	DefaultVerticalAlignStyle,
+	FlexShapeAlignContentStyle,
+	FlexShapeAlignItemsStyle,
+	FlexShapeDirectionStyle,
+	FlexShapeGapStyle,
+	FlexShapeJustifyContentStyle,
+	FlexShapePaddingStyle,
+	FlexShapeWrapStyle,
 	GeoShapeGeoStyle,
 	kickoutOccludedShapes,
 	LineShapeSplineStyle,
@@ -57,6 +64,15 @@ export function DefaultStylePanelContent() {
 				<StylePanelArrowKindPicker />
 				<StylePanelArrowheadPicker />
 				<StylePanelSplinePicker />
+			</StylePanelSection>
+			<StylePanelSection>
+				<StylePanelFlexDirectionPicker />
+				<StylePanelFlexWrapPicker />
+				<StylePanelFlexJustifyContentPicker />
+				<StylePanelFlexAlignItemsPicker />
+				<StylePanelFlexAlignContentPicker />
+				<StylePanelFlexGapPicker />
+				<StylePanelFlexPaddingPicker />
 			</StylePanelSection>
 		</>
 	)
@@ -348,6 +364,135 @@ export function StylePanelGeoShapePicker() {
 			style={GeoShapeGeoStyle}
 			items={items}
 			value={geo}
+		/>
+	)
+}
+
+/** @public @react */
+export function StylePanelFlexDirectionPicker() {
+	const { styles } = useStylePanelContext()
+	const direction = styles.get(FlexShapeDirectionStyle)
+	if (direction === undefined) return null
+
+	return (
+		<StylePanelButtonPicker
+			title="Flex direction"
+			uiType="flex-direction"
+			style={FlexShapeDirectionStyle}
+			items={STYLES.flexDirection}
+			value={direction}
+		/>
+	)
+}
+
+/** @public @react */
+export function StylePanelFlexWrapPicker() {
+	const { styles } = useStylePanelContext()
+	const wrap = styles.get(FlexShapeWrapStyle)
+	if (wrap === undefined) return null
+
+	return (
+		<StylePanelButtonPicker
+			title="Flex wrap"
+			uiType="flex-wrap"
+			style={FlexShapeWrapStyle}
+			items={STYLES.flexWrap}
+			value={wrap}
+		/>
+	)
+}
+
+/** @public @react */
+export function StylePanelFlexJustifyContentPicker() {
+	const { styles } = useStylePanelContext()
+	const justifyContent = styles.get(FlexShapeJustifyContentStyle)
+	if (justifyContent === undefined) return null
+
+	return (
+		<StylePanelDropdownPicker
+			type="menu"
+			id="flex-justify-content"
+			uiType="flex-justify"
+			stylePanelType="flex-justify"
+			style={FlexShapeJustifyContentStyle}
+			items={STYLES.flexJustifyContent}
+			value={justifyContent}
+		/>
+	)
+}
+
+/** @public @react */
+export function StylePanelFlexAlignItemsPicker() {
+	const { styles } = useStylePanelContext()
+	const alignItems = styles.get(FlexShapeAlignItemsStyle)
+	if (alignItems === undefined) return null
+
+	return (
+		<StylePanelDropdownPicker
+			type="menu"
+			id="flex-align-items"
+			uiType="flex-align"
+			stylePanelType="flex-align-items"
+			style={FlexShapeAlignItemsStyle}
+			items={STYLES.flexAlignItems}
+			value={alignItems}
+		/>
+	)
+}
+
+/** @public @react */
+export function StylePanelFlexAlignContentPicker() {
+	const { styles } = useStylePanelContext()
+	const alignContent = styles.get(FlexShapeAlignContentStyle)
+	if (alignContent === undefined) return null
+
+	return (
+		<StylePanelDropdownPicker
+			type="menu"
+			id="flex-align-content"
+			uiType="flex-align-content"
+			stylePanelType="flex-align-content"
+			style={FlexShapeAlignContentStyle}
+			items={STYLES.flexAlignContent}
+			value={alignContent}
+		/>
+	)
+}
+
+/** @public @react */
+export function StylePanelFlexGapPicker() {
+	const { styles } = useStylePanelContext()
+	const gap = styles.get(FlexShapeGapStyle)
+	if (gap === undefined) return null
+
+	return (
+		<StylePanelDropdownPicker
+			type="menu"
+			id="flex-gap"
+			uiType="flex-space"
+			stylePanelType="flex-gap"
+			style={FlexShapeGapStyle}
+			items={STYLES.flexSpace}
+			value={gap}
+		/>
+	)
+}
+
+/** @public @react */
+export function StylePanelFlexPaddingPicker() {
+	const { styles } = useStylePanelContext()
+	const padding = styles.get(FlexShapePaddingStyle)
+	if (padding === undefined) return null
+
+	return (
+		<StylePanelDropdownPicker
+			type="menu"
+			id="flex-padding"
+			uiType="flex-space"
+			stylePanelType="flex-padding"
+			style={FlexShapePaddingStyle}
+			items={STYLES.flexSpace}
+			value={padding}
 		/>
 	)
 }

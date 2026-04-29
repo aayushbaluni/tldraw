@@ -14,6 +14,7 @@ import { TLBaseShape, createShapeValidator } from '../shapes/TLBaseShape'
 import { TLBookmarkShape } from '../shapes/TLBookmarkShape'
 import { TLDrawShape } from '../shapes/TLDrawShape'
 import { TLEmbedShape } from '../shapes/TLEmbedShape'
+import { TLFlexShape } from '../shapes/TLFlexShape'
 import { TLFrameShape } from '../shapes/TLFrameShape'
 import { TLGeoShape } from '../shapes/TLGeoShape'
 import { TLGroupShape } from '../shapes/TLGroupShape'
@@ -49,6 +50,7 @@ export type TLDefaultShape =
 	| TLBookmarkShape
 	| TLDrawShape
 	| TLEmbedShape
+	| TLFlexShape
 	| TLFrameShape
 	| TLGeoShape
 	| TLGroupShape

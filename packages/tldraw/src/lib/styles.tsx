@@ -96,6 +96,79 @@ function fontIcon(font: TLThemeFont, name: string): string | TLUiIconJsx {
 
 // todo: default styles prop?
 export const STYLES = {
+	flexDirection: [
+		{ value: 'row', icon: 'stack-horizontal' },
+		{ value: 'column', icon: 'stack-vertical' },
+	],
+	flexWrap: [
+		{ value: 'nowrap', icon: 'stretch-horizontal' },
+		{ value: 'wrap', icon: 'pack' },
+	],
+	flexJustifyContent: [
+		{ value: 'flex-start', icon: 'align-left' },
+		{ value: 'center', icon: 'align-center-horizontal' },
+		{ value: 'flex-end', icon: 'align-right' },
+		{ value: 'space-between', icon: 'distribute-horizontal' },
+		{ value: 'space-around', icon: 'distribute-horizontal' },
+		{ value: 'space-evenly', icon: 'distribute-horizontal' },
+	],
+	flexAlignItems: [
+		{ value: 'flex-start', icon: 'align-top' },
+		{ value: 'center', icon: 'align-center-vertical' },
+		{ value: 'flex-end', icon: 'align-bottom' },
+		{ value: 'stretch', icon: 'stretch-vertical' },
+	],
+	flexAlignContent: [
+		{ value: 'flex-start', icon: 'align-top' },
+		{ value: 'center', icon: 'align-center-vertical' },
+		{ value: 'flex-end', icon: 'align-bottom' },
+		{ value: 'stretch', icon: 'stretch-vertical' },
+		{ value: 'space-between', icon: 'distribute-vertical' },
+		{ value: 'space-around', icon: 'distribute-vertical' },
+	],
+	flexGap: [
+		{ value: 'none', icon: 'minus' },
+		{ value: 'xs', icon: 'size-small' },
+		{ value: 's', icon: 'size-small' },
+		{ value: 'm', icon: 'size-medium' },
+		{ value: 'l', icon: 'size-large' },
+		{ value: 'xl', icon: 'size-extra-large' },
+	],
+	flexPadding: [
+		{ value: 'none', icon: 'minus' },
+		{ value: 'xs', icon: 'corners' },
+		{ value: 's', icon: 'corners' },
+		{ value: 'm', icon: 'corners' },
+		{ value: 'l', icon: 'corners' },
+		{ value: 'xl', icon: 'corners' },
+	],
+	flexAlignSelf: [
+		{ value: 'auto', icon: 'minus' },
+		{ value: 'flex-start', icon: 'align-top' },
+		{ value: 'center', icon: 'align-center-vertical' },
+		{ value: 'flex-end', icon: 'align-bottom' },
+		{ value: 'stretch', icon: 'stretch-vertical' },
+	],
+	flexGrow: [
+		{ value: '0', icon: 'minus' },
+		{ value: '1', icon: 'plus' },
+	],
+	flexShrink: [
+		{ value: '0', icon: 'lock' },
+		{ value: '1', icon: 'unlock' },
+	],
+	flexBasis: [
+		{ value: 'auto', icon: 'corners' },
+		{ value: 'zero', icon: 'minus' },
+		{ value: 's', icon: 'size-small' },
+		{ value: 'm', icon: 'size-medium' },
+		{ value: 'l', icon: 'size-large' },
+	],
+	flexOrder: [
+		{ value: '-1', icon: 'send-backward' },
+		{ value: '0', icon: 'minus' },
+		{ value: '1', icon: 'bring-forward' },
+	],
 	fill: [
 		{ value: 'none', icon: 'fill-none' },
 		{ value: 'semi', icon: 'fill-semi' },
@@ -188,5 +261,10 @@ export const STYLES = {
 	spline: [
 		{ value: 'line', icon: 'spline-line' },
 		{ value: 'cubic', icon: 'spline-cubic' },
+	],
+	flexItemOrder: [
+		{ value: '-1', icon: 'send-backward' },
+		{ value: '0', icon: 'minus' },
+		{ value: '1', icon: 'bring-forward' },
 	],
 } as const satisfies Record<string, StyleValuesForUi<string>>

@@ -241,6 +241,27 @@ export function ToolsProvider({ overrides, children }: TLUiToolsProviderProps) {
 				},
 			},
 			{
+				id: 'flex',
+				label: 'tool.flex',
+				icon: 'stretch-horizontal',
+				onSelect(source) {
+					editor.setCurrentTool('flex')
+					onToolSelect(source, this)
+				},
+				onDragStart(source, info) {
+					const scale = editor.getResizeScaleFactor()
+					onDragFromToolbarToCreateShape(editor, info, {
+						createShape: (id) =>
+							editor.createShape({
+								id,
+								type: 'flex',
+								props: { w: 320 * scale, h: 180 * scale },
+							}),
+					})
+					trackEvent('drag-tool', { source, id: 'flex' })
+				},
+			},
+			{
 				id: 'text',
 				label: 'tool.text',
 				icon: 'tool-text',
