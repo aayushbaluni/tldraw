@@ -38,6 +38,10 @@ describe('simpleMermaidStringTest', () => {
 				expect(simpleMermaidStringTest(input)).toBe(true)
 			})
 		}
+
+		it('detects kanban with body lines after the keyword', () => {
+			expect(simpleMermaidStringTest('kanban\n  Title')).toBe(true)
+		})
 	})
 
 	describe('with boilerplate stripped', () => {
@@ -119,6 +123,13 @@ describe('simpleMermaidStringTest', () => {
 		it('rejects text that merely mentions a keyword', () => {
 			expect(simpleMermaidStringTest('Let me think about flowcharts')).toBe(false)
 			expect(simpleMermaidStringTest('My flowchart TD\n  A --> B')).toBe(false)
+		})
+
+		it('rejects compound-word false positives (issue #8481)', () => {
+			expect(simpleMermaidStringTest('timeline')).toBe(false)
+			expect(simpleMermaidStringTest('kanban-board')).toBe(false)
+			expect(simpleMermaidStringTest('pie-chart')).toBe(false)
+			expect(simpleMermaidStringTest('infographic')).toBe(false)
 		})
 
 		it('rejects empty string', () => {

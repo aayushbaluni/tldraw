@@ -6,14 +6,30 @@
  * https://github.com/mermaid-js/mermaid/blob/277c4967f97405e9bb172c0a2f67f462a672b162/packages/mermaid/src/diagram-api/regexes.ts
  *
  * Strips YAML frontmatter, %%{...}%% directives, and %% comments, then tests for
- * a known diagram keyword at the start of the cleaned text.
+ * a known diagram keyword at the start of the cleaned text (word boundaries plus
+ * continuation checks so plain vocabulary is not mistaken for diagram syntax).
  *
  * This file intentionally has zero imports so it can be loaded statically without
  * pulling in the heavy mermaid library.
  */
 const FRONTMATTER_REGEX = /^-{3}\s*[\n\r]([\s\S]*?)[\n\r]-{3}\s*[\n\r]+/
+
+/** Diagram keywords may appear as bare minimal syntax (whole paste); others must show diagram-like continuation. */
+const BARE_DIAGRAM_KEYWORDS = new Set([
+	'C4Container',
+	'C4Component',
+	'C4Dynamic',
+	'C4Deployment',
+	'info',
+	'kanban',
+	'quadrantChart',
+])
+
+/** Supported `-suffix` diagram variants (e.g. sankey-beta), including `-v2` for stateDiagram-v2. */
+const DIAGRAM_KEYWORD_SUFFIX_REGEX = /^-(?:beta|alpha|v\d+)\b/
+
 const DIAGRAM_KEYWORD_REGEX =
-	/^\s*(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram|journey|gantt|pie|gitGraph|mindmap|timeline|sankey|xychart|block|quadrantChart|requirement|C4Context|C4Container|C4Component|C4Dynamic|C4Deployment|packet|kanban|architecture|treemap|radar|info)/
+	/^\s*\b(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram|journey|gantt|pie|gitGraph|mindmap|timeline|sankey|xychart|block|quadrantChart|requirement|C4Context|C4Container|C4Component|C4Dynamic|C4Deployment|packet|kanban|architecture|treemap|radar|info)\b/
 
 /**
  * Leading ```mermaid (or longer run) fence, closed by the first line that ends
@@ -42,5 +58,22 @@ export function stripMarkdownMermaidFence(text: string): string {
 }
 
 export function simpleMermaidStringTest(text: string): boolean {
-	return DIAGRAM_KEYWORD_REGEX.test(stripMermaidBoilerplate(stripMarkdownMermaidFence(text)))
+	const cleaned = stripMermaidBoilerplate(stripMarkdownMermaidFence(text))
+	const match = cleaned.match(DIAGRAM_KEYWORD_REGEX)
+	if (!match || match.index === undefined) return false
+
+	const keyword = match[1]
+	const rest = cleaned.slice(match.index + match[0].length)
+	const trimmedAfterKeyword = rest.trimStart()
+
+	if (BARE_DIAGRAM_KEYWORDS.has(keyword)) {
+		if (!trimmedAfterKeyword.length) return true
+		if (trimmedAfterKeyword.startsWith('-')) return DIAGRAM_KEYWORD_SUFFIX_REGEX.test(trimmedAfterKeyword)
+		return true
+	}
+
+	if (!trimmedAfterKeyword.length) return false
+	if (trimmedAfterKeyword.startsWith('-')) return DIAGRAM_KEYWORD_SUFFIX_REGEX.test(trimmedAfterKeyword)
+
+	return true
 }
